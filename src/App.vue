@@ -1,10 +1,37 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <Nav />
   </div>
-  <router-view/>
+
+  <router-view />
 </template>
+
+<script lang="ts">
+import { defineComponent, onUnmounted } from "vue";
+import Nav from "@/components/Nav.vue";
+import store from "@/store/index";
+
+export default defineComponent({
+  components: {
+    Nav,
+  },
+  setup() {
+    function startPooling() {
+      return setInterval(() => store.dispatch("updatePostsAction"), 5000);
+    }
+
+    const interval = startPooling();
+
+    onUnmounted(() => {
+      clearInterval(interval)
+    })
+
+    return {
+      
+    }
+  },
+});
+</script>
 
 <style>
 #app {
